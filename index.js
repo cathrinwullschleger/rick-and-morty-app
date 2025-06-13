@@ -27,9 +27,15 @@ async function fetchDataAndRender() {
 
   const characters = data.results;
 
+  // Clear the card container before adding new cards
+  cardContainer.innerHTML = "";
+
   console.log("name!!!", characters[1].name);
 
-  createCharacterCard(characters);
+  characters.forEach((character) => {
+    const characterCard = createCharacterCard(character);
+    cardContainer.append(characterCard);
+  });
 }
 
 fetchDataAndRender();

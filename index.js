@@ -1,3 +1,5 @@
+import { createCharacterCard } from "./components/CharacterCard/CharacterCard.js";
+
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
   '[data-js="search-bar-container"]'
@@ -23,7 +25,17 @@ async function fetchDataAndRender() {
 
   console.log(data);
 
-  const character = data.results;
+  const characters = data.results;
+
+  // Clear the card container before adding new cards
+  cardContainer.innerHTML = "";
+
+  console.log("name!!!", characters[1].name);
+
+  characters.forEach((character) => {
+    const characterCard = createCharacterCard(character);
+    cardContainer.append(characterCard);
+  });
 }
 
 fetchDataAndRender();

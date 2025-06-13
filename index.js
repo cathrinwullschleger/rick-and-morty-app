@@ -25,9 +25,11 @@ async function fetchDataAndRender() {
 
   console.log(data);
 
-  const character = data.results;
+  const characters = data.results;
+
+  console.log("name!!!", characters[1].name);
+
+  createCharacterCard(characters);
 }
 
 fetchDataAndRender();
-
-createCharacterCard();

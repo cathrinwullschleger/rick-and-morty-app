@@ -78,12 +78,12 @@ const nextButton = document.querySelector('[data-js="button-next"]');
 // logic buttons
 nextButton.addEventListener("click", () => {
   if (currentPage < maxPage) {
-    fetchDataAndRender(currentPage + 1);
+    fetchDataAndRender(currentPage + 1, inputValue); // Keeps search term and page synced.
   }
 });
 
 prevButton.addEventListener("click", () => {
   if (currentPage > 1) {
-    fetchDataAndRender(currentPage - 1);
+    fetchDataAndRender(currentPage - 1, inputValue);
   }
 });

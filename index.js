@@ -1,27 +1,29 @@
 import { createCharacterCard } from "./components/CharacterCard/CharacterCard.js";
+import { renderPagination } from "./components/NavPagination/NavPagination.js";
 
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
   '[data-js="search-bar-container"]'
 );
 const searchBar = document.querySelector('[data-js="search-bar"]');
-const navigation = document.querySelector('[data-js="navigation"]');
-const prevButton = document.querySelector('[data-js="button-prev"]');
-const nextButton = document.querySelector('[data-js="button-next"]');
-const pagination = document.querySelector('[data-js="pagination"]');
 
-// States
-const maxPage = 1;
-const page = 1;
 const searchQuery = "";
+const navigation = document.querySelector('[data-js="navigation"]');
 
-// dom element for a card to append to the body
+// initial states
+export let maxPage = 1; // will be updated later by API (need to be defined, thats why 1 as palceholder)
+export let currentPage = 1;
 
 // fetch function
-
-async function fetchDataAndRender() {
-  const response = await fetch("https://rickandmortyapi.com/api/character");
+export async function fetchDataAndRender(page = 1) {
+  const response = await fetch(
+    `https://rickandmortyapi.com/api/character?page=${page}`
+  );
   const data = await response.json();
+
+  // update max and current page
+  currentPage = page;
+  maxPage = data.info.pages;
 
   console.log(data);
 
@@ -32,10 +34,13 @@ async function fetchDataAndRender() {
 
   console.log("name!!!", characters[1].name);
 
+  // loop create card for each and append
   characters.forEach((character) => {
     const characterCard = createCharacterCard(character);
     cardContainer.append(characterCard);
   });
+  // show pagination
+  renderPagination();
 }
 
 fetchDataAndRender();

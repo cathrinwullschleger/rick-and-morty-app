@@ -1,20 +1,18 @@
 import { createCharacterCard } from "./components/CharacterCard/CharacterCard.js";
+import { createSearchBar } from "./components/SearchBar/SearchBar.js";
 
-const cardContainer = document.querySelector('[data-js="card-container"]');
-const searchBarContainer = document.querySelector(
-  '[data-js="search-bar-container"]'
-);
-//const navigation = document.querySelector('[data-js="navigation"]');
+const navigation = document.querySelector('[data-js="navigation"]');
 
 // initial states
 
-let maxPage = 1; // will be updated later by API (need to be defined, thats why 1 as palceholder)
+let maxPage = 1; // will be updated later by API (need to be defined, thats why 1 is palceholder)
 let currentPage = 1;
 
 let inputValue = ""; // global variable (empty)
 
 // fetch function
 async function fetchDataAndRender(page = 1, inputValue = "") {
+  // parameters (placeholder with value)
   try {
     const response = await fetch(
       `https://rickandmortyapi.com/api/character?page=${page}&name=${inputValue}`
@@ -31,7 +29,7 @@ async function fetchDataAndRender(page = 1, inputValue = "") {
 
     const characters = data.results;
 
-    // Clear the card container before adding new cards
+    // Clear the card container before adding new cards or delete hardcode in html
     cardContainer.innerHTML = "";
 
     // loop create card for each and append
@@ -54,14 +52,14 @@ fetchDataAndRender();
 
 // searchBar eventListener
 
-const searchBar = document.querySelector('[data-js="search-bar"]');
+const searchBarContainer = document.querySelector(
+  '[data-js="search-bar-container"]'
+);
 
-searchBar.addEventListener("submit", (event) => {
-  event.preventDefault(); // prevent reloading
-
-  inputValue = event.target.query.value;
+searchBarContainer.append(createSearchBar)(({ inputValue: query }) => {
+  inputValue = query;
   currentPage = 1;
-  fetchDataAndRender(currentPage, inputValue); // important currentPage=1 start searching first page
+  fetchDataAndRender(currentPage, inputValue); // important currentPage=1 start searching first page // arguments in function for submit event
 });
 
 // NavPagination

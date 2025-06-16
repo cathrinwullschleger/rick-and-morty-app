@@ -15,6 +15,7 @@ let inputValue = ""; // global variable (empty)
 
 // fetch function
 async function fetchDataAndRender(page = 1, inputValue = "") {
+  // parameters (placeholder with value)
   try {
     const response = await fetch(
       `https://rickandmortyapi.com/api/character?page=${page}&name=${inputValue}`
@@ -61,7 +62,7 @@ searchBar.addEventListener("submit", (event) => {
 
   inputValue = event.target.query.value;
   currentPage = 1;
-  fetchDataAndRender(currentPage, inputValue); // important currentPage=1 start searching first page
+  fetchDataAndRender(currentPage, inputValue); // important currentPage=1 start searching first page // arguments in function for submit event
 });
 
 // NavPagination
